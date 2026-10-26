@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Latifa's 20th Birthday</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- مكتبة الأيقونات الاحترافية -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- مكتبة قواعد البيانات -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <!-- تأثير التشويش الزجاجي (Noise) والإضاءة -->
+  <div class="noise-overlay"></div>
+  <div class="ambient-glow"></div>
+
+  <!-- شاشة التحميل (Boot Screen) -->
+  <div id="boot-screen" class="boot-screen">
+    <div class="boot-content">
+      <div class="boot-logo en-font">Latifa_OS <span class="blink">_</span></div>
+      <div class="loading-bar"><div class="loading-fill"></div></div>
+      <div class="boot-text en-font">INITIALIZING BIRTHDAY PROTOCOL...</div>
+    </div>
+  </div>
+
+  <div class="app-container hidden" id="main-app">
+    
+    <header class="app-header">
+      <div class="step-progress">
+        <span class="step-dot active" data-step="1"></span>
+        <span class="step-dot" data-step="2"></span>
+        <span class="step-dot" data-step="3"></span>
+        <span class="step-dot" data-step="4"></span>
+      </div>
+    </header>
+
+    <main class="content-wrapper">
+      
+      <!-- ==============================================
+           الشاشة 1: الترحيب 
+           ============================================== -->
+      <section id="screen-1" class="screen active">
+        <div class="glass-card hero-card">
+          
+          <div class="glow-number-container">
+            <h1 class="giant-neon-number">20</h1>
+          </div>
+
+          <div class="title-block">
+            <h2 class="en-title neon-text">LATIFA'S BIRTHDAY</h2>
+            <p class="ar-sub">عشرين سنة، وأحلى ناس معي <i data-lucide="heart" class="icon-sm"></i></p>
+          </div>
+
+          <p class="welcome-quote">
+            يا أهلاً بأحلى بنات! وجودكم هو أحلى جزء من عيد ميلادي العشرين.
+          </p>
+
+          <div class="meta-pill-group">
+            <div class="meta-pill">
+              <i data-lucide="calendar-heart" class="icon-md"></i>
+              <span class="text en-font">Saturday · 31 October 2026</span>
+            </div>
+            <div class="meta-pill">
+              <i data-lucide="clock" class="icon-md"></i>
+              <span class="text en-font">5:00 – 7:00 PM</span>
+            </div>
+          </div>
+
+          <button type="button" id="btn-start" class="btn-glow-primary">
+            <span>افتحي دعوتك</span>
+            <i data-lucide="sparkles" class="icon-btn"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           الشاشة 2: التفاصيل والفعاليات
+           ============================================== -->
+      <section id="screen-2" class="screen hidden">
+        <button type="button" class="btn-back" data-target="1">
+          <i data-lucide="chevron-right" class="icon-sm"></i> رجوع
+        </button>
+
+        <div class="glass-card">
+          <div class="title-block">
+            <h2 class="en-title neon-text">YOU'RE INVITED</h2>
+            <p class="ar-sub">هاي الدعوة معمولِة إلك من قلبي</p>
+          </div>
+
+          <div class="guest-selector-block">
+            <label class="field-label">مين من أحلى البنات بتفتح دعوتها؟</label>
+            
+            <div class="custom-dropdown" id="custom-dropdown">
+              <div class="custom-dropdown-selected" id="dropdown-selected">
+                <span>اختاري اسمك من القائمة...</span>
+                <i data-lucide="chevron-down" class="icon-sm"></i>
+              </div>
+              <div class="custom-dropdown-options hidden" id="dropdown-options">
+                <div class="custom-option" data-value="شيماء">شيماء</div>
+                <div class="custom-option" data-value="أسيل">أسيل</div>
+                <div class="custom-option" data-value="حور">حور</div>
+                <div class="custom-option" data-value="شهد">شهد</div>
+                <div class="custom-option" data-value="رند">رند</div>
+                <div class="custom-option" data-value="نور">نور</div>
+                <div class="custom-option" data-value="تالا">تالا</div>
+                <div class="custom-option" data-value="آية">آية</div>
+                <div class="custom-option" data-value="زهراء">زهراء</div>
+              </div>
+            </div>
+            <div id="personalized-greeting" class="personalized-greeting hidden"></div>
+          </div>
+
+          <div class="info-bubble">
+            <h3 class="bubble-title"><i data-lucide="map-pin" class="icon-sm"></i> التفاصيل والمكان</h3>
+            <p class="bubble-text">
+              <strong>اليوم والوقت:</strong> السبت 31/10/2026، من 5:00 إلى 7:00 مساءً.<br>
+              <strong>الموقع:</strong> بيتي، قريب من مدرسة الأندلس، عند سوبر ماركت فاميلي.
+            </p>
+            <p class="bubble-note">اللوكيشن الدقيق رح أبعتلكم إياه على الخاص، وأغلبكم بعرفه</p>
+          </div>
+
+          <div class="activities-section">
+            <h3 class="section-title"><i data-lucide="layers" class="icon-sm"></i> برنامج الحفلة</h3>
+            <div class="activities-grid">
+              <div class="activity-card">
+                <i data-lucide="ghost" class="act-icon"></i>
+                <span class="act-name en-font">Mafia Game</span>
+                <p class="act-desc">ضحك، تحقيق، واتهامات!</p>
+              </div>
+              <div class="activity-card">
+                <i data-lucide="palette" class="act-icon"></i>
+                <span class="act-name en-font">Canvas Painting</span>
+                <p class="act-desc">كل وحدة تبدع على كانفاس.</p>
+              </div>
+              <div class="activity-card">
+                <i data-lucide="cake" class="act-icon"></i>
+                <span class="act-name en-font">Cake & Music</span>
+                <p class="act-desc">كيكة العشرين وأغانٍ مفضلة.</p>
+              </div>
+              <div class="activity-card">
+                <i data-lucide="camera" class="act-icon"></i>
+                <span class="act-name en-font">Photos</span>
+                <p class="act-desc">صور جماعية تخلّد لمتنا.</p>
+              </div>
+              <div class="activity-card">
+                <i data-lucide="gift" class="act-icon"></i>
+                <span class="act-name en-font">Little Gifts</span>
+                <p class="act-desc">هدايا صغيرة مني إلكم.</p>
+              </div>
+              <div class="activity-card">
+                <i data-lucide="pen-tool" class="act-icon"></i>
+                <span class="act-name en-font">20 Words</span>
+                <p class="act-desc">استبيان 20 كلمة للذكرى.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="notes-card">
+            <h3 class="notes-title"><i data-lucide="alert-circle" class="icon-sm"></i> ملاحظات من القلب</h3>
+            <ul class="notes-list">
+              <li>اللمّة إلنا إحنا البنات وبس، وماما موجودة بالبيت</li>
+              <li>اللي بتحب تخلع حجابها بتقدر براحتها، الخصوصية أهم إشي.</li>
+              <li>ممنوع التأخير! مستنيتكم الساعة 5:00 بالزبط.</li>
+            </ul>
+          </div>
+
+          <button type="button" id="btn-to-rsvp" class="btn-glow-primary" disabled>
+            <span>يلا نأكد حضورك</span>
+            <i data-lucide="arrow-left" class="icon-btn"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           الشاشة 3: الاستبيان (RSVP) و 20 كلمة
+           ============================================== -->
+      <section id="screen-3" class="screen hidden">
+        <button type="button" class="btn-back" data-target="2">
+          <i data-lucide="chevron-right" class="icon-sm"></i> رجوع
+        </button>
+
+        <div class="glass-card">
+          <div class="title-block">
+            <h2 class="en-title neon-text">SAVE YOUR SPOT</h2>
+            <p class="ar-sub">كم سؤال صغير وبصير موعدنا أكيد</p>
+          </div>
+
+          <form id="rsvp-form">
+            
+            <!-- تصميم Segmented Control للحضور -->
+            <div class="form-group">
+              <label class="field-label">رح تيجي تحتفلي معي؟</label>
+              <div class="segmented-control">
+                <input type="radio" id="att-1" name="attendance" value="أكيد راح أجي">
+                <label for="att-1">أكيد راح أجي</label>
+                
+                <input type="radio" id="att-2" name="attendance" value="طبعًا أنا جاي">
+                <label for="att-2">طبعًا أنا جاي</label>
+                
+                <input type="radio" id="att-3" name="attendance" value="أنا جاية بالتأكيد">
+                <label for="att-3">أنا جاية بالتأكيد</label>
+              </div>
+            </div>
+
+            <!-- تصميم Segmented Control للوقت -->
+            <div class="form-group">
+              <label class="field-label">الساعة 5 للـ7 بناسبك؟</label>
+              <div class="segmented-control">
+                <input type="radio" id="time-1" name="time_suitability" value="suitable">
+                <label for="time-1">آه، مناسب جدًا</label>
+                
+                <input type="radio" id="time-2" name="time_suitability" value="alternative">
+                <label for="time-2">بفضّل وقت ثاني</label>
+              </div>
+              <div id="alt-time-container" class="hidden mt-10">
+                <input type="text" id="alt-time-input" class="glass-input w-100" placeholder="اكتبي شو الوقت الأنسب إلك...">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="field-label"><i data-lucide="message-circle" class="icon-sm"></i> رقم الواتساب تبعك</label>
+              <p class="field-hint">عشان أبعتلك اللوكيشن والتفاصيل عالخاص.</p>
+              <div class="input-icon-wrapper">
+                <i data-lucide="phone" class="input-icon"></i>
+                <input type="tel" id="whatsapp-input" class="glass-input ltr-text with-icon" placeholder="07XXXXXXXX">
+              </div>
+              <div id="whatsapp-error" class="error-msg hidden">يرجى إدخال رقم أردني صحيح</div>
+            </div>
+
+            <div class="form-group words-section">
+              <div class="flex-between">
+                <div>
+                  <h3 class="field-label en-font">20 Words for My 20th</h3>
+                  <p class="field-hint">كل كلمة بكبسولة لحالها، كذكرى بتجنن</p>
+                </div>
+                <div class="words-counter"><span id="words-filled-count">0</span> / 20</div>
+              </div>
+              
+              <div class="capsules-grid mt-10" id="capsules-grid">
+                <!-- JavaScript Capsules -->
+              </div>
+              <div id="capsules-error-msg" class="error-msg hidden">كل كبسولة لكلمة واحدة فقط بدون مسافات.</div>
+            </div>
+
+            <div id="submit-error" class="error-msg text-center hidden mt-10"></div>
+
+            <button type="submit" id="btn-submit-rsvp" class="btn-glow-primary mt-20" disabled>
+              <span class="btn-text">أرسلي حبّك للطيفة</span>
+              <i data-lucide="send" class="icon-btn"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           الشاشة 4: النجاح
+           ============================================== -->
+      <section id="screen-4" class="screen hidden">
+        <div class="glass-card success-card">
+          <i data-lucide="party-popper" class="sparkle-icon-svg"></i>
+          <div class="title-block">
+            <h2 class="en-title neon-text">SEE YOU SOON!</h2>
+            <div class="success-status-pill">
+              <i data-lucide="check-circle-2" class="icon-sm"></i> وصلني ردّك وكلماتك
+            </div>
+          </div>
+
+          <div class="personal-letter">
+            <p id="success-message-dynamic" class="letter-body"></p>
+            <p id="success-alt-time-note" class="letter-note hidden">
+              <i data-lucide="info" class="icon-sm"></i> وشفت ملاحظتك عن الوقت، رح أراجعها ♡
+            </p>
+          </div>
+
+          <div class="celebration-footer-note">
+            رح نستمتع كثير، وبستناكي من قلبي!<br>
+            <strong class="sign-name">— لطيفة ♡</strong>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <span class="en-font">Latifa • 20th Birthday</span>
+        <span class="footer-sep">|</span>
+        <span class="ar-font">النهدي أصلًا لوني المفضل</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
